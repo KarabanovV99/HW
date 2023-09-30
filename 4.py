@@ -1,7 +1,9 @@
 x = input()
-if x.count('(') < x.count(')'):
+a = x.count('(')
+b = x.count(')')
+if a < b:
     print("Не хватает '('")
-elif x.count('(') > x.count(')'):
+elif a > b:
     print("Не хватает ')'")
 else:
     print("Все скобки есть")
