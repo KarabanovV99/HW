@@ -1,8 +1,8 @@
 from random import randint
 
 m = randint(0, 100)
-while True:
-    n = int(input('input:'))
+n = int(input('input:'))
+while m != n:
     if m > n:
         print('Загаданное число больше!')
     elif m < n:
