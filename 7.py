@@ -1,12 +1,9 @@
-from random import randint
-
-m = randint(0, 100)
-while True:
-    n = int(input('input:'))
-    if m > n:
-        print('Загаданное число больше!')
-    elif m < n:
-        print('Загаданное число меньше!')
+x = randint(0, 100)
+y = int(input())
+while y != x:
+    if x < y:
+        print("Число больше загадонного")
     else:
-        print('Вы угадали число!')
-        break
+        print("число меньше загадонного")
+    y = int(input())
+print("угадал")
