@@ -9,3 +9,4 @@ while True:
         print('Загаданное число меньше!')
     else:
         print('Вы угадали число!')
+        break
