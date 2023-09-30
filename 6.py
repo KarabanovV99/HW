@@ -20,7 +20,6 @@
 
 x = input()
 y = y0 = int(input())
-a = 0
 for i in x:
     if i.isdigit():
         y -= 1
