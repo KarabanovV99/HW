@@ -5,6 +5,6 @@ def season(n):
         return "весна"
     elif 6 <= n <= 8:
         return "лето"
-    else 9 <= n <= 11:
+    else:
         return "осень"
 print(season(int(input())))
