@@ -1,7 +1,7 @@
 lst = [1, 2, 3, 4, 5]
 
-def f(n):
-    srsum = sum(n) // len(n)
+def sr_sum(n):
+    srsum = sum(n) / len(n)
     return srsum
 
-print(f(lst))
+print(sr_sum(lst))
