@@ -9,6 +9,7 @@ def long(t):
 def coun(t):
 
     count = Counter(t)
+    
     return count.most_common(1)[0][0]
 
 lst = input("Введите список: ").split()
