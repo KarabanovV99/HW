@@ -1,8 +1,6 @@
-def f():    
+def f(n):    
     c1 = 1
     c2 = 1
-
-    n = int(input())
 
     print(c1)
     if n >= 2:
@@ -12,4 +10,6 @@ def f():
         c1, c2 = c2, c1 + c2
         print(c2)
 
-f()
+n = int(input())
+
+f(n)
