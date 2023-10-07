@@ -10,6 +10,6 @@ def f(n):
         c1, c2 = c2, c1 + c2
         print(c2)
 
-n = int(input())
+n = int(input("Сколько чисел вывести: "))
 
 f(n)
