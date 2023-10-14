@@ -18,9 +18,7 @@ def cauntt(t):
     for slovo in slova:
         slovoCountt[slovo] = slovoCountt.get(slovo, 0) + 1
 
-    most_frequent_word = max(slovoCountt, key=slovoCountt.get)
-
-    return most_frequent_word
+    return max(slovoCountt, key=slovoCountt.get)
 
 
 t = input("Текст: ")
