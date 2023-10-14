@@ -7,7 +7,6 @@ def prosto(n):
             c += 1
             return False
     return True
-        
-x = int(input("Число: "))
 
-print(prosto(x))
+
+print(prosto(int(input("Число: "))))

@@ -12,6 +12,4 @@ def f(lst):
     return '\n'.join(output)
 
 
-
-
 print(f(vvod()))
