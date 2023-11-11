@@ -27,7 +27,5 @@ from HW5.BIPOISK import binary_search
     ([1, 2, 3, 4, 5], 5, 4),  # target is present at the end of the sequence
     ([], 3, None)  # empty sequence
 ])
-
-
 def test_binary_search(sequence, target, expected):
     assert binary_search(sequence, target) == expected
