@@ -9,8 +9,3 @@ def binary_search(sequence, target):
         else:
             low = mid + 1
     return result
-
-
-if __name__ == '__main__':
-
-    print(binary_search([-1, 1, 1, 1, 1, 1, 9], 9))
