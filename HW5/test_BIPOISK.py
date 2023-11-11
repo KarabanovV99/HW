@@ -20,6 +20,12 @@ from HW5.BIPOISK import binary_search
     ([-2, -2, -1, 0, 1, 2, 2, 2], -1, 2),
     ([-2, -2, -1, 0, 1, 1, 2, 2], 1, 4),
     ([56, 230, 234, 747, 83274, 823573723], 823573723, 5),
+    ([1, 2, 3, 4, 5], 3, 2),  # target is present in the middle of the sequence
+    ([1, 2, 3, 4, 5], 6, None),  # target is not present in the sequence
+    ([1, 2, 3, 3, 4, 5], 3, 2),  # target is present multiple times
+    ([1, 2, 3, 4, 5], 1, 0),  # target is present at the beginning of the sequence
+    ([1, 2, 3, 4, 5], 5, 4),  # target is present at the end of the sequence
+    ([], 3, None)  # empty sequence
 ])
 
 
