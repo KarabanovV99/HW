@@ -1,5 +1,5 @@
 import pytest
-from HW6.hesh import Hash
+from HW6.hesh import *
 
 
 @pytest.mark.parametrize("key,expected",
@@ -15,8 +15,7 @@ from HW6.hesh import Hash
     ("php", 8)
 ])
 def test_hash(key, expected):
-    h = Hash()
-    assert h.hash(key) == expected
+    assert hash(key) == expected
 
 
 @pytest.mark.parametrize("key,value",
@@ -32,9 +31,8 @@ def test_hash(key, expected):
     ("key10", "value10")
 ])
 def test_set_value(key, value):
-    h = Hash()
-    h.set_value(key, value)
-    assert h.get_value(key) == value
+    set_value(key, value)
+    assert get_value(key) == value
 
 
 @pytest.mark.parametrize("key,value",
@@ -50,9 +48,8 @@ def test_set_value(key, value):
     ("key10", "value10")
 ])
 def test_get_value(key, value):
-    h = Hash()
-    h.set_value(key, value)
-    assert h.get_value(key) == value
+    set_value(key, value)
+    assert get_value(key) == value
 
 
 @pytest.mark.parametrize("key,value",
@@ -68,22 +65,20 @@ def test_get_value(key, value):
     ("key10", "value10")
 ])
 def test_del_value(key, value):
-    h = Hash()
-    h.set_value(key, value)
-    h.del_value(key)
-    assert h.get_value(key) is None
+    set_value(key, value)
+    del_value(key)
+    assert get_value(key) is None
 
 
 def test_load():
-    h = Hash()
-    h.set_value("key1", "value1")
-    h.set_value("key2", "value2")
-    h.set_value("key3", "value3")
-    h.set_value("key4", "value4")
-    h.set_value("key5", "value5")
-    h.set_value("key6", "value6")
-    h.set_value("key7", "value7")
-    h.set_value("key8", "value8")
-    h.set_value("key9", "value9")
-    h.set_value("key10", "value10")
-    assert h.load() == 0.9
+    set_value("key1", "value1")
+    set_value("key2", "value2")
+    set_value("key3", "value3")
+    set_value("key4", "value4")
+    set_value("key5", "value5")
+    set_value("key6", "value6")
+    set_value("key7", "value7")
+    set_value("key8", "value8")
+    set_value("key9", "value9")
+    set_value("key10", "value10")
+    assert load() == 0.9

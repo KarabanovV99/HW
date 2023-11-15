@@ -1,8 +1,7 @@
-from hesh import Hash
+from hesh import *
 
 
 def main():
-    h = Hash()
 
     while True:
         print("\033[31m" + "1. Добавить значение")
@@ -17,19 +16,25 @@ def main():
         if choice == '1':
             key = input("\033[32m" + "Введите ключ: " + "\033[0m")
             value = input("\033[32m" + "Введите значение: " + "\033[0m")
-            h.set_value(key, value)
+            set_value(key, value)
+
         elif choice == '2':
             key = input("\033[32m" + "Введите ключ: " + "\033[0m")
-            h.del_value(key)
+            del_value(key)
+
         elif choice == '3':
             key = input("\033[32m" + "Введите ключ: " + "\033[0m")
-            print(h.get_value(key))
+            print(get_value(key))
+
         elif choice == '4':
-            print(h.load())
+            print(load())
+
         elif choice == '5':
-            print(h.table)
+            print(table)
+
         elif choice == '6':
             break
+
         else:
             print("\033[33m" + "Неверный выбор. Попробуйте еще раз." + "\033[0m")
 
