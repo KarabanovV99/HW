@@ -12,21 +12,24 @@ from HW6.hesh import Hash
     ("c#", 4),
     ("ruby", 0),
     ("javascript", 9),
-    ("php", 8)]
-    )
+    ("php", 8)
+])
 def test_hash(key, expected):
     h = Hash()
     assert h.hash(key) == expected
 
 
-@pytest.mark.parametrize("key,value", [("key1", "value1"),
+@pytest.mark.parametrize("key,value",
+    [("key1", "value1"),
     ("key2", "value2"),
     ("key3", "value3"),
     ("key4", "value4"),
     ("key5", "value5"),
     ("key6", "value6"),
     ("key7", "value7"),
-    ("key8", "value8"), ("key9", "value9"), ("key10", "value10")
+    ("key8", "value8"),
+    ("key9", "value9"),
+    ("key10", "value10")
 ])
 def test_set_value(key, value):
     h = Hash()
@@ -35,16 +38,16 @@ def test_set_value(key, value):
 
 
 @pytest.mark.parametrize("key,value",
-[("key1", "value1"),
-("key2", "value2"),
-("key3", "value3"),
-("key4", "value4"),
-("key5", "value5"),
-("key6", "value6"),
-("key7", "value7"),
-("key8", "value8"),
-("key9", "value9"),
-("key10", "value10")
+    [("key1", "value1"),
+    ("key2", "value2"),
+    ("key3", "value3"),
+    ("key4", "value4"),
+    ("key5", "value5"),
+    ("key6", "value6"),
+    ("key7", "value7"),
+    ("key8", "value8"),
+    ("key9", "value9"),
+    ("key10", "value10")
 ])
 def test_get_value(key, value):
     h = Hash()
@@ -53,16 +56,17 @@ def test_get_value(key, value):
 
 
 @pytest.mark.parametrize("key,value",
-[("key1", "value1"),
-("key2", "value2"),
-("key3", "value3"),
-("key4", "value4"),
-("key5", "value5"),
-("key6", "value6"),
-("key7", "value7"),
-("key8", "value8"),
-("key9", "value9"),
-("key10", "value10")])
+    [("key1", "value1"),
+    ("key2", "value2"),
+    ("key3", "value3"),
+    ("key4", "value4"),
+    ("key5", "value5"),
+    ("key6", "value6"),
+    ("key7", "value7"),
+    ("key8", "value8"),
+    ("key9", "value9"),
+    ("key10", "value10")
+])
 def test_del_value(key, value):
     h = Hash()
     h.set_value(key, value)
