@@ -1,8 +1,26 @@
 import pytest
-from HW6.hesh import *
+from HW6.heshhhhhhhh import *
 
 
-@pytest.mark.parametrize("key,expected",
+def test_load():
+    size = 10
+    table = init_table(size)
+
+    size, table = set_value("key1", "value1", table, size)
+    size, table = set_value("key2", "value2", table, size)
+    size, table = set_value("key3", "value3", table, size)
+    size, table = set_value("key4", "value4", table, size)
+    size, table = set_value("key5", "value5", table, size)
+    size, table = set_value("key6", "value6", table, size)
+    size, table = set_value("key7", "value7", table, size)
+    size, table = set_value("key8", "value8", table, size)
+    size, table = set_value("key9", "value9", table, size)
+    size, table = set_value("key10", "value10", table, size)
+
+    assert load(table) == 0.45
+
+
+@pytest.mark.parametrize("key, expected",
     [("test", 8),
     ("hello", 2),
     ("world", 2),
@@ -12,73 +30,65 @@ from HW6.hesh import *
     ("c#", 4),
     ("ruby", 0),
     ("javascript", 9),
-    ("php", 8)
+    ("php", 8),
+    ("", 0),
+    (" ", 2),
+    ("front_govno", 1),
+    ("☠️", 9),
 ])
-def test_hash(key, expected):
-    assert hash(key) == expected
+
+def test_hashing(key, expected):
+    size = 10
+
+    assert hashing(key, size) == expected
 
 
-@pytest.mark.parametrize("key,value",
-    [("key1", "value1"),
-    ("key2", "value2"),
-    ("key3", "value3"),
-    ("key4", "value4"),
-    ("key5", "value5"),
-    ("key6", "value6"),
-    ("key7", "value7"),
-    ("key8", "value8"),
-    ("key9", "value9"),
-    ("key10", "value10")
-])
-def test_set_value(key, value):
-    set_value(key, value)
-    assert get_value(key) == value
+@pytest.mark.parametrize("size, expected",
+    [(5, [[], [], [], [], []]),
+    (3, [[], [], []]),
+    (0, [])])
+
+def test_init_table(size, expected):
+    assert init_table(size) == expected
 
 
-@pytest.mark.parametrize("key,value",
-    [("key1", "value1"),
-    ("key2", "value2"),
-    ("key3", "value3"),
-    ("key4", "value4"),
-    ("key5", "value5"),
-    ("key6", "value6"),
-    ("key7", "value7"),
-    ("key8", "value8"),
-    ("key9", "value9"),
-    ("key10", "value10")
-])
-def test_get_value(key, value):
-    set_value(key, value)
-    assert get_value(key) == value
+def test_set_value():
+    size = 5
+    table = init_table(size)
+
+    size, table = set_value("hello", "world", table, size)
+    assert table == [[], [], [['hello', 'world']], [], []]
+    size, table = set_value("foo", "bar", table, size)
+    assert table == [[], [], [['hello', 'world']], [], [['foo', 'bar']]]
+
+def test_get_value():
+    size = 5
+    table = init_table(size)
+
+    size, table = set_value("hello", "world", table, size)
+    value = get_value("hello", table, size)
+    assert value == "world"
+    size, table = set_value("foo", "bar", table, size)
+    value = get_value("foo", table, size)
+    assert value == "bar"
 
 
-@pytest.mark.parametrize("key,value",
-    [("key1", "value1"),
-    ("key2", "value2"),
-    ("key3", "value3"),
-    ("key4", "value4"),
-    ("key5", "value5"),
-    ("key6", "value6"),
-    ("key7", "value7"),
-    ("key8", "value8"),
-    ("key9", "value9"),
-    ("key10", "value10")
-])
-def test_del_value(key, value):
-    set_value(key, value)
-    del_value(key)
-    assert get_value(key) is None
+def test_del_value():
+    size = 5
+    table = init_table(size)
+
+    size, table = set_value("hello", "world", table, size)
+    table = del_value("hello", table, size)
+    assert table == [[], [], [], [], []]
+    size, table = set_value("foo", "bar", table, size)
+    value = del_value("foo", table, size)
+    assert table == [[], [], [], [], []]
 
 
-def test_load():
-    set_value("key1", "value1")
-    set_value("key2", "value2")
-    set_value("key3", "value3")
-    set_value("key4", "value4")
-    set_value("key5", "value5")
-    set_value("key6", "value6")
-    set_value("key7", "value7")
-    set_value("key8", "value8")
-    set_value("key9", "value9")
-    set_value("key10", "value10")
-    assert load() == 0.9
+def test_resize():
+    size = 5
+    table = init_table(size)
+
+    size, table = resize(size, table)
+    assert size == 10
+    assert table == [[], [], [], [], [], [], [], [], [], []]

@@ -1,33 +1,40 @@
-from hesh import *
+from heshhhhhhhh import *
 
 
 def main():
-
+    size: int = 10
+    table = init_table(size)
     while True:
-        print("\033[31m" + "1. Добавить значение")
+        print(COLORS["red"] + "1. Добавить значение")
         print("2. Удалить значение")
         print("3. Получить значение")
         print("4. Коэффициент заполнения")
         print("5. Вывести таблицу")
-        print("6. Выход" + "\033[0m")
+        print("6. Выход" + COLORS["finish"])
 
-        choice = input("\033[32m" + "Введите ваш выбор: " + "\033[0m")
+        choice = input(COLORS["green"] + "Введите ваш выбор: " + COLORS["finish"])
 
         if choice == '1':
-            key = input("\033[32m" + "Введите ключ: " + "\033[0m")
-            value = input("\033[32m" + "Введите значение: " + "\033[0m")
-            set_value(key, value)
+            key = input(COLORS["green"] + "Введите ключ: " + COLORS["finish"])
+            value = input(COLORS["green"] + "Введите значение: " + COLORS["finish"])
+            size, table = set_value(key, value, table, size)
 
         elif choice == '2':
-            key = input("\033[32m" + "Введите ключ: " + "\033[0m")
-            del_value(key)
+            key = input(COLORS["green"] + "Введите ключ: " + COLORS["finish"])
+            table = del_value(key, table, size)
 
         elif choice == '3':
-            key = input("\033[32m" + "Введите ключ: " + "\033[0m")
-            print(get_value(key))
+            key = input(COLORS["green"] + "Введите ключ: " + COLORS["finish"])
+            print(get_value(key, table, size))
 
         elif choice == '4':
-            print(load())
+            print("Table size:", size)
+            for i in range(size):
+                if table[i]:
+                    print("■", end="")
+                else:
+                    print("□", end="")
+            print("\n", load(table))
 
         elif choice == '5':
             print(table)
@@ -36,7 +43,7 @@ def main():
             break
 
         else:
-            print("\033[33m" + "Неверный выбор. Попробуйте еще раз." + "\033[0m")
+            print(COLORS["yellow"] + "Неверный выбор. Попробуйте еще раз." + COLORS["finish"])
 
 
 if __name__ == "__main__":
