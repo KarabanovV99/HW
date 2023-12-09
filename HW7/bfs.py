@@ -1,11 +1,8 @@
 from collections import deque
-from typing import Dict, List
+from typing import Callable, Any
 
 
-def yourcodehere(node, target):
-    return node == target
-
-def bfs(graph: Dict[int, List[int]], start: int, target: int, function) -> int | None:
+def bfs(graph: dict[Any, list], start, target, function: Callable[Any, Any]) -> int | None:
     visited = set()
     queue = deque([(start, 0)])
 
@@ -19,7 +16,3 @@ def bfs(graph: Dict[int, List[int]], start: int, target: int, function) -> int |
                 queue.append((neighbor, distance + 1))
 
     return None
-
-
-if __name__ == '__main__':
-    print(bfs({0: [1, 4], 1: [77, 55], 4: [99, 666]}, 0, 666, yourcodehere))  # None
