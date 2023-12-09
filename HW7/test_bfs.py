@@ -1,6 +1,13 @@
 import pytest
 from HW7.bfs import bfs
 
+
+def yourcodehere(node, target):
+    if node == target:
+        return True
+    else:
+        return False
+    
 @pytest.mark.parametrize("graph, start, target, expected", [
     ({'A': ['B', 'C'], 'B': ['A', 'D', 'E'], 'C': ['A', 'F'], 'D': ['B'], 'E': ['B', 'F'], 'F': ['C', 'E']}, 'A', 'A', 0),
     ({'A': ['B', 'C'], 'B': ['A', 'D', 'E'], 'C': ['A', 'F'], 'D': ['B'], 'E': ['B', 'F'], 'F': ['C', 'E']}, 'A', 'B', 1),
@@ -15,6 +22,7 @@ from HW7.bfs import bfs
     ({'A': ['B', 'E'], 'B': ['A', 'C'], 'C': ['B', 'D'], 'D': ['C', 'E'], 'E': ['A', 'D']}, 'D', 'E', 1),
     ({'A': ['B', 'E'], 'B': ['A', 'C'], 'C': ['B', 'D'], 'D': ['C', 'E'], 'E': ['A', 'D']}, 'E', 'A', 1),
     ({'A': ['B', 'E'], 'B': ['A', 'C'], 'C': ['B', 'D'], 'D': ['C', 'E'], 'E': ['A', 'D']}, 'A', 'F', None),
+    ({}, "A", "F", None)
 ])
 def test_bfs(graph, start, target, expected):
-    assert bfs(graph, start, target) == expected
+    assert bfs(graph, start, target, yourcodehere) == expected
