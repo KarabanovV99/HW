@@ -55,6 +55,10 @@ class HashTable:
     def load(self) -> float:
         return len([bucket for bucket in self.table if bucket]) / self.size
 
+    def dick_to_hesh(self, dic: dict) -> None:
+        for key, value in dic.items():
+            self.set_value(key, value)
+
     def __str__(self) -> str:
         elements = [item for sublist in self.table for item in sublist if item]
         str_output = '{' + ', '.join('"{}": "{}"'.format(k, v) for k, v in elements) + '}'
