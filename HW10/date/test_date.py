@@ -25,7 +25,6 @@ def test_is_leap_year(year, expected_result):
     assert Date.is_leap_year(year) == expected_result
 
 
-
 @pytest.mark.parametrize(
     "input_values, expected_day, expected_month, expected_year, expected_era",
     [
@@ -135,4 +134,4 @@ def test_init(freeze_date, expected_day, expected_month, expected_year):
     assert d.day == expected_day
     assert d.month == expected_month
     assert d.year == expected_year
-    assert d.before_common_era == False
+    assert d.before_common_era is False
