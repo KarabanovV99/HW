@@ -1,9 +1,17 @@
-from date import Date, ColorEnum
+from date import Date, ColorEnum, DateStamp
 
 
 def main():
-    d1 = Date()
-    d1.input_date()
+    voite = int(input(
+        "{0}Введите 1, чтобы ввести дату вручную, или 2, чтобы ввести сегодняшнюю дату: {1}".format(ColorEnum.GREEN,
+                                                                                                    ColorEnum.FINISH)))
+    if voite == 1:
+        d1 = Date()
+        d1.input_date()
+    elif voite == 2:
+        d1 = DateStamp()
+    else:
+        print(ColorEnum.RED + "Incorrect choice. Try again" + ColorEnum.FINISH)
     print(ColorEnum.GREEN + "\n" + str(d1) + ColorEnum.FINISH)
     while True:
         print(ColorEnum.BLUE + "_" * 27 + ColorEnum.FINISH, "\n")

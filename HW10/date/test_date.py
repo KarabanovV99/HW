@@ -1,7 +1,7 @@
 import pytest
 from unittest import mock
-from date import Date, DateValidationError
-
+from date import Date, DateValidationError, DateStamp
+import freezegun
 
 
 @pytest.fixture
@@ -118,3 +118,21 @@ def test_adjust_days(date):
     assert date.day == 2
     date.adjust_days(-1)
     assert date.day == 1
+
+
+@pytest.mark.parametrize(
+    "freeze_date, expected_day, expected_month, expected_year",
+    [
+        ('0001-1-1', 1, 1, 1),
+        ("1941-6-22", 22, 6, 1941),
+        ("2023-1-2", 2, 1, 2023),
+        ("2022-2-28", 28, 2, 2022)
+    ]
+)
+def test_init(freeze_date, expected_day, expected_month, expected_year):
+    with freezegun.freeze_time(freeze_date):
+        d = DateStamp()
+    assert d.day == expected_day
+    assert d.month == expected_month
+    assert d.year == expected_year
+    assert d.before_common_era == False
