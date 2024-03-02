@@ -1,18 +1,28 @@
+from enum import StrEnum
+
+
+class ColorEnum(StrEnum):
+    RED = "\033[31m"
+    GREEN = "\033[32m"
+    YELLOW = "\033[33m"
+    BLUE = "\033[34m"
+    FINISH = "\033[0m"
+
+
 class HashTable:
-    COLORS = {
-        "red": "\033[31m",
-        "green": "\033[32m",
-        "yellow": "\033[33m",
-        "blue": "\033[34m",
-        "finish": "\033[0m"
-    }
+    def __init__(self, size: int = 10, dict_mode: None | dict = None):
+        if dict_mode is not None:
+            if not isinstance(dict_mode, dict):
+                raise TypeError(ColorEnum.RED + 'Вы подали не словарь, а какую-то *****' + ColorEnum.FINISH)
+            self.size = size
+            self.table = self.init_table(size)
+            self.dict_to_hesh(dict_mode)
+        else:
+            self.size = size
+            self.table = self.init_table(size)
 
-
-    def __init__(self, size: int = 10):
-        self.size = size
-        self.table = self.init_table(size)
-
-    def init_table(self, size: int) -> list:
+    @staticmethod
+    def init_table(size: int) -> list:
         return [[] for _ in range(size)]
 
     def hash(self, key: str) -> int:
@@ -44,7 +54,7 @@ class HashTable:
                 return v
         return None
 
-    def del_value(self, key: str) -> None:
+    def del_value(self, key: str) -> bool:
         hash_index: int = self.hash(key)
         for i in range(0, len(self.table[hash_index])):
             if self.table[hash_index][i][0] == key:
@@ -55,7 +65,7 @@ class HashTable:
     def load(self) -> float:
         return len([bucket for bucket in self.table if bucket]) / self.size
 
-    def dick_to_hesh(self, dic: dict) -> None:
+    def dict_to_hesh(self, dic: dict) -> None:
         for key, value in dic.items():
             self.set_value(key, value)
 
@@ -63,3 +73,12 @@ class HashTable:
         elements = [item for sublist in self.table for item in sublist if item]
         str_output = '{' + ', '.join('"{}": "{}"'.format(k, v) for k, v in elements) + '}'
         return str_output
+
+
+if __name__ == '__main__':
+    d = {'персона': 'человек',
+         'марафон': 'гонка бегунов длиной около 26 миль',
+         'противостоять': 'оставаться сильным, несмотря на давление',
+         'бежать': 'двигаться со скоростью'}
+    hash_table = HashTable(len(d), d)
+    print(hash_table)
