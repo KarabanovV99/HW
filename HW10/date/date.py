@@ -23,8 +23,9 @@ class Date:
     def input_date(self) -> None:
         """date entry"""
         while True:
-            inp_date = input(ColorEnum.GREEN + "Введите дату в формате День.Месяц.Год(если дата до н.э., то вводите "
-                                               "-Год):  " + ColorEnum.FINISH)
+            inp_date: str = input(
+                "{0}Введите дату в формате День.Месяц.Год(если дата до н.э., то вводите -Год):  {1}".format(
+                    ColorEnum.GREEN, ColorEnum.FINISH))
             try:
                 self.day, self.month, self.year = map(int, inp_date.split("."))
                 if self.year < 0:
@@ -35,8 +36,7 @@ class Date:
                 self.validate_date()
                 break
             except ValueError:  # input format error
-                print(
-                    "{0}Некорректный формат даты. Пожалуйста, введите дату в формате День.Месяц.Год.{1}".format(
+                print("{0}Некорректный формат даты. Пожалуйста, введите дату в формате День.Месяц.Год.{1}".format(
                         ColorEnum.RED, ColorEnum.FINISH))
             except DateValidationError as e:  # custom error
                 print(ColorEnum.RED + str(e) + ColorEnum.FINISH)
@@ -55,15 +55,14 @@ class Date:
     def validate_date(self) -> None:
         """checking the validity of the day and month"""
         if self.year == 0:
-            raise DateValidationError(ColorEnum.RED + "Год 0 не существует (оказывается)" + ColorEnum.FINISH,
+            raise DateValidationError("{0}Год 0 не существует (оказывается){1}".format(ColorEnum.RED, ColorEnum.FINISH),
                                       'invalid_year')
         if not 1 <= self.month <= 12:
-            raise DateValidationError(
-                ColorEnum.RED + "Некорректный месяц. Месяц должен быть от 1 до 12." + ColorEnum.FINISH, 'invalid_month')
+            raise DateValidationError("{0}Некорректный месяц. Месяц должен быть от 1 до 12."
+                                      "{1}".format(ColorEnum.RED, ColorEnum.FINISH), 'invalid_month')
         if not 1 <= self.day <= self.days_in_month():
-            raise DateValidationError(
-                ColorEnum.RED + "Некорректный день. Пожалуйста, проверьте количество дней в месяце." + ColorEnum.FINISH,
-                'invalid_day')
+            raise DateValidationError("{0}Некорректный день. Пожалуйста, проверьте количество дней в месяце"
+                                      ".{1}".format(ColorEnum.RED, ColorEnum.FINISH), 'invalid_day')
 
     def add_days(self, days: int) -> None:
         """adding days"""
@@ -154,6 +153,41 @@ class Date:
         era_str = "до н.э." if self.before_common_era else ""
         return f'{self.day}.{self.month}.{self.year} {era_str}'
 
+    def __add__(self, other):
+        self.day = self.day + other.day
+        self.month = self.month + other.month
+        self.year = self.year + other.year
+
+        while self.day > self.days_in_month():
+            self.day -= self.days_in_month()
+            self.month += 1
+
+        while self.month > 12:
+            self.month -= 12
+            self.year += 1
+
+        return Date(self.day, self.month, self.year)
+
+    def __sub__(self, other):
+        self.day = self.day - other.day
+        self.month = self.month - other.month
+        self.year = self.year - other.year
+
+        if self.day < 1:
+            self.month -= 1
+            if self.month < 1:
+                self.month += 12
+                self.year -= 1
+
+            days_in_month = self.days_in_month()
+            self.day += days_in_month
+
+        if self.month < 1:
+            self.month += 12
+            self.year -= 1
+
+        return Date(self.day, self.month, self.year)
+
 
 class DateStamp(Date):
     def __init__(self):
@@ -172,6 +206,11 @@ class DateValidationError(Exception):
         self.code = code
 
 
-d = DateStamp()
-print(d)
-print(type(d))
+if __name__ == "__main__":
+    d = DateStamp()
+    print(d)
+    p = Date(29, 4,2023)
+    t = Date(31, 1, 2008)
+    print(p)
+    print(t)
+    print(p - t)
