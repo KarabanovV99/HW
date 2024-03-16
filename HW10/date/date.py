@@ -46,11 +46,13 @@ class Date:
         """checking leap year"""
         return (y % 4 == 0 and y % 100 != 0) or not y % 400
 
-    def days_in_month(self) -> int:
+    @classmethod
+    def days_in_month(cls, m: int, y: int):
         """checking the correct number of months"""
-        if self.month == 2 and self.is_leap_year(self.year):
+        if m == 2 and cls.is_leap_year(y):
             return 29
-        return self.arr_days_in_month[self.month - 1]
+        m = m % 12
+        return cls.arr_days_in_month[m - 1]
 
     def validate_date(self) -> None:
         """checking the validity of the day and month"""
@@ -60,7 +62,7 @@ class Date:
         if not 1 <= self.month <= 12:
             raise DateValidationError("{0}Некорректный месяц. Месяц должен быть от 1 до 12."
                                       "{1}".format(ColorEnum.RED, ColorEnum.FINISH), 'invalid_month')
-        if not 1 <= self.day <= self.days_in_month():
+        if not 1 <= self.day <= self.days_in_month(self.month, self.year):
             raise DateValidationError("{0}Некорректный день. Пожалуйста, проверьте количество дней в месяце"
                                       ".{1}".format(ColorEnum.RED, ColorEnum.FINISH), 'invalid_day')
 
@@ -68,7 +70,7 @@ class Date:
         """adding days"""
         days_left = days
         while days_left > 0:
-            days_in_month = self.days_in_month()
+            days_in_month = self.days_in_month(self.month, self.year)
             if self.day + days_left <= days_in_month:
                 self.day += days_left
                 break
@@ -95,7 +97,7 @@ class Date:
                     self.year -= 1
                 else:
                     self.month -= 1
-                self.day = self.days_in_month()
+                self.day = self.days_in_month(self.month, self.year)
             if self.year == 0:
                 self.year += 1
 
@@ -154,39 +156,39 @@ class Date:
         return f'{self.day}.{self.month}.{self.year} {era_str}'
 
     def __add__(self, other):
-        self.day = self.day + other.day
-        self.month = self.month + other.month
-        self.year = self.year + other.year
+        day = self.day + other.day
+        month = self.month + other.month
+        year = self.year + other.year
 
-        while self.day > self.days_in_month():
-            self.day -= self.days_in_month()
-            self.month += 1
+        while day > self.days_in_month(month, year):
+            day -= self.days_in_month(month, year)
+            month += 1
 
-        while self.month > 12:
-            self.month -= 12
-            self.year += 1
+        while month > 12:
+            month -= 12
+            year += 1
 
-        return Date(self.day, self.month, self.year)
+        return __class__(day, month, year)
 
     def __sub__(self, other):
-        self.day = self.day - other.day
-        self.month = self.month - other.month
-        self.year = self.year - other.year
+        day = self.day - other.day
+        month = self.month - other.month
+        year = self.year - other.year
 
-        if self.day < 1:
-            self.month -= 1
-            if self.month < 1:
-                self.month += 12
-                self.year -= 1
+        if day < 1:
+            month -= 1
+            if month < 1:
+                month += 12
+                year -= 1
 
-            days_in_month = self.days_in_month()
-            self.day += days_in_month
+            days_in_month = self.days_in_month(month, year)
+            day += days_in_month
 
-        if self.month < 1:
-            self.month += 12
-            self.year -= 1
+        if month < 1:
+            month += 12
+            year -= 1
 
-        return Date(self.day, self.month, self.year)
+        return __class__(day, month, year)
 
 
 class DateStamp(Date):
@@ -209,8 +211,8 @@ class DateValidationError(Exception):
 if __name__ == "__main__":
     d = DateStamp()
     print(d)
-    p = Date(29, 4,2023)
-    t = Date(31, 1, 2008)
+    p = Date(15, 8, 2022)
+    t = Date(15, 8, 2)
     print(p)
     print(t)
     print(p - t)

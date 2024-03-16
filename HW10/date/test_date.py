@@ -64,7 +64,7 @@ def test_input_date(input_values, expected_day, expected_month, expected_year, e
 def test_days_in_month(date, month, year, expected_days):
     date.month = month
     date.year = year
-    assert date.days_in_month() == expected_days
+    assert date.days_in_month(date.month, date.year) == expected_days
 
 
 @pytest.mark.parametrize(
@@ -135,3 +135,46 @@ def test_init(freeze_date, expected_day, expected_month, expected_year):
     assert d.month == expected_month
     assert d.year == expected_year
     assert d.before_common_era is False
+
+@pytest.mark.parametrize("day1, month1, year1, day2, month2, year2, expected_day, expected_month, expected_year", [
+    (1, 1, 1, 1, 1, 1, 2, 2, 2),  # Test case 1
+    (28, 2, 2020, 1, 1, 1, 29, 3, 2021),  # Test case 2
+    (31, 12, 2020, 1, 1, 1, 1, 2, 2022),  # Test case 3
+    (15, 8, 2022, 15, 8, 2022, 30, 4, 4045),  # Test case 4
+    (25, 11, 2023, 7, 3, 2021, 4, 3, 4045),  # Test case 5
+    (1, 1, 1, 0, 0, 0, 1, 1, 1),  # Test case 6
+    (31, 12, 9999, 1, 1, 1, 1, 2, 10001),  # Test case 7
+    # Add more test cases here as needed
+])
+def test_add(day1, month1, year1, day2, month2, year2, expected_day, expected_month, expected_year):
+    date_one = Date(day1, month1, year1)
+    date_two = Date(day2, month2, year2)
+    date_res = date_one + date_two
+    assert date_res.day == expected_day
+    assert date_res.month == expected_month
+    assert date_res.year == expected_year
+    assert date_one.day == day1
+    assert date_one.month == month1
+    assert date_one.year == year1
+
+@pytest.mark.parametrize("day1, month1, year1, day2, month2, year2, expected_day, expected_month, expected_year", [
+    (2, 2, 2, 1, 1, 1, 1, 1, 1),  # Test case 1
+    (31, 12, 2020, 1, 1, 2019, 30, 11, 1),  # Test case 3
+    (15, 8, 2022, 15, 8, 2, 30, 11, 2019),  # Test case 4
+    (25, 11, 2023, 7, 3, 2021, 18, 8, 2),  # Test case 5
+    (1, 1, 1, 0, 0, 0, 1, 1, 1),  # Test case 6
+    (31, 12, 9999, 1, 1, 1, 30, 11, 9998),  # Test case 7
+    # Add more test cases here as needed
+])
+def test_sub(day1, month1, year1, day2, month2, year2, expected_day, expected_month, expected_year):
+    date_one = Date(day1, month1, year1)
+    date_two = Date(day2, month2, year2)
+    date_res = date_one - date_two
+    assert date_res.day == expected_day
+    assert date_res.month == expected_month
+    assert date_res.year == expected_year
+    assert date_one.day == day1
+    assert date_one.month == month1
+    assert date_one.year == year1
+
+
