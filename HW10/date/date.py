@@ -190,6 +190,40 @@ class Date:
 
         return __class__(day, month, year)
 
+    def __eq__(self, other):
+        return (self.year, self.month, self.day, self.before_common_era) == (other.year, other.month, other.day, other.before_common_era)
+
+    def __lt__(self, other):
+        if self.before_common_era == other.before_common_era:
+            return self > other
+        elif self.before_common_era < other.before_common_era:
+            return False
+        elif self.year < other.year:
+            return True
+        elif self.year == other.year and self.month < other.month:
+            return True
+        elif self.year == other.year and self.month == other.month and self.day < other.day:
+            return True
+        else:
+            return False
+
+    def __le__(self, other):
+        return self < other or self == other
+
+    def __gt__(self, other):
+        # if self.before_common_era == other.before_common_era:
+        #     return self < other
+        if self.before_common_era > other.before_common_era:
+            return False
+        elif self.year > other.year:
+            return True
+        elif self.year == other.year and self.month > other.month:
+            return True
+        elif self.year == other.year and self.month == other.month and self.day > other.day:
+            return True
+        else:
+            return False
+
 
 class DateStamp(Date):
     def __init__(self):
@@ -209,10 +243,9 @@ class DateValidationError(Exception):
 
 
 if __name__ == "__main__":
-    d = DateStamp()
-    print(d)
-    p = Date(15, 8, 2022)
-    t = Date(15, 8, 2)
-    print(p)
-    print(t)
-    print(p - t)
+    'before_common_era False - наша эра, True - до нашей эры'
+    date_one = Date(1, 1, 1, True)
+    date_two = Date(2, 2, 2, True)
+    date_tree = Date(1, 1, 1)
+    print(date_one < date_two)
+    print(date_two < date_one)
